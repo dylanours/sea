@@ -2,15 +2,19 @@
 #include <string.h>
 
 void getInput(char*);
-int htoi(char*);
+int htoi(char*, int);
 
 int main() {
 	char input[50] = "";
+	char b[10] = "";
+	printf("Base: ");
+	getInput(b);
+	int base = htoi(b, 10);
 	while (input[0] != '-') {
 		printf("Hex number: ");
 		getInput(input);
 		if ((input[0] == 'O' || input[0] == '0' || input[0] == 'o') && input[1] == 'x') {
-			int converted = htoi(input);
+			int converted = htoi(input, base);
 			printf("\nDecimal: %d\n", converted);
 		} else {
 			printf("Invalid hex entry.\n");
@@ -41,13 +45,13 @@ int ctoi(char c) {
 	return c - 'a' + 10;
 }
 
-int htoi(char* input) {
+int htoi(char* input, int base) {
 	int convert = 0;
 	int end = 1;
 	while (input[++end] != '\0')
 		;
 	int pos = 0;
 	for (int i=end-1; i>=2; i--)
-		convert += (ex(16, pos++) * ctoi(input[i]));
+		convert += (ex(base, pos++) * ctoi(input[i]));
 	return convert;
 }
